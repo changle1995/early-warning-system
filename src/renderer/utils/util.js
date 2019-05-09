@@ -85,37 +85,6 @@ export let convertProductsToExcelBuffer = (products) => {
     return xlsx.build([{name: "sheet1", data: data}])
 }
 
-export let parseWhiteList = (whiteList) => {
-    let where = {
-        id: parseIn(whiteList.id),
-        sku: parseIn(whiteList.sku),
-        name: parseLike(whiteList.name),
-        createdAt: parseRange(whiteList.createdAtGte, whiteList.createdAtLte),
-        updatedAt: parseRange(whiteList.updatedAtGte, whiteList.updatedAtLte)
-    }
-    deleteBlankField(where)
-    return where
-}
-
-export let convertWhiteListsToExcelBuffer = (whiteLists) => {
-    let header = [
-        'SKU',
-        '商品名称',
-        '创建时间',
-        '更新时间'
-    ]
-    let data = whiteLists.map(whiteList => {
-        return [
-            whiteList.sku,
-            whiteList.name,
-            whiteList.createdAt,
-            whiteList.updatedAt
-        ]
-    })
-    data.unshift(header)
-    return xlsx.build([{name: "sheet1", data: data}])
-}
-
 export let parseScript = (script) => {
     let where = {
         id: parseIn(script.id),
