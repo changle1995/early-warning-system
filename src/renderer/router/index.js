@@ -11,14 +11,14 @@ export default new Router({
             component: require('../components/Product').default
         },
         {
-            path: '/whiteList',
-            name: 'whiteList',
-            component: require('../components/WhiteList').default
+            path: '/sale',
+            name: 'sale',
+            component: require('../components/Sale').default
         },
         {
-            path: '/blackList',
-            name: 'blackList',
-            component: require('../components/BlackList').default
+            path: '/removed',
+            name: 'removed',
+            component: require('../components/Removed').default
         },
         {
             path: '/script',

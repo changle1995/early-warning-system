@@ -43,24 +43,14 @@ let Product = sequelize.define('product',
         timestamps: false
     })
 
-let WhiteList = sequelize.define('white_list', {
+let MyProduct = sequelize.define('my_product', {
     id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },
     sku: Sequelize.STRING,
-    name: Sequelize.TEXT
-})
-
-let BlackList = sequelize.define('black_list', {
-    id: {
-        type: Sequelize.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
-    },
-    sku: Sequelize.STRING,
-    name: Sequelize.TEXT
+    state: Sequelize.INTEGER
 })
 
 let Script = sequelize.define('script',
@@ -83,4 +73,4 @@ let Script = sequelize.define('script',
         timestamps: false
     })
 
-export default {sequelize, Product, WhiteList, BlackList, Script}
+export default {sequelize, Product, MyProduct, Script}

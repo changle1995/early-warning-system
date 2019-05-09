@@ -103,25 +103,6 @@
                 </el-col>
             </el-row>
 
-            <el-row>
-                <el-col :span="6">
-                    <el-form-item label="黑名单：">
-                        <el-select v-model="blackChecked">
-                            <el-option label="过滤" :value="true"></el-option>
-                            <el-option label="不过滤" :value="false"></el-option>
-                        </el-select>
-                    </el-form-item>
-                </el-col>
-                <el-col :span="6">
-                    <el-form-item label="白名单：">
-                        <el-select v-model="whiteChecked">
-                            <el-option label="过滤" :value="true"></el-option>
-                            <el-option label="不过滤" :value="false"></el-option>
-                        </el-select>
-                    </el-form-item>
-                </el-col>
-            </el-row>
-
             <el-form-item style="text-align: center">
                 <el-button type="primary" icon="el-icon-search" @click="search"></el-button>
                 <el-button type="warning" icon="el-icon-delete" @click="product = {}"></el-button>
@@ -129,7 +110,7 @@
             </el-form-item>
         </el-form>
 
-        <el-table :data="products" style="width: 100%;" border max-height="500">
+        <el-table :data="products" style="width: 100%;" border height="450">
             <el-table-column prop="batchNo" label="批次号" width="150"></el-table-column>
             <el-table-column prop="sku" label="SKU" width="100"></el-table-column>
             <el-table-column prop="name" label="商品名称" show-overflow-tooltip></el-table-column>
@@ -165,9 +146,7 @@
                 total: 0,
                 products: [],
                 product: {},
-                productBak: {},
-                blackChecked: true,
-                whiteChecked: true
+                productBak: {}
             }
         },
         methods: {
@@ -177,26 +156,7 @@
                 }, (filename) => {
                     if (filename) {
                         Sequelize.Product.findAll({where: parseProduct(this.productBak), order: [['batch_no', 'desc']]}).then(products => {
-                            Sequelize.BlackList.findAll({attributes: ['sku']}).then(blackLists => {
-                                let blackSkus = blackLists.map(blackList => blackList.sku).filter(sku => sku && sku.trim())
-                                Sequelize.WhiteList.findAll({attributes: ['sku']}).then(whiteLists => {
-                                    let whiteSkus = whiteLists.map(whiteList => whiteList.sku).filter(sku => sku && sku.trim())
-                                    let tmp = products
-                                    let result = products
-                                    if (this.blackChecked) {
-                                        tmp = products.filter(product => !blackSkus.includes(product.sku))
-                                        result = tmp
-                                    }
-                                    if (this.whiteChecked) {
-                                        result = tmp.filter(product => whiteSkus.includes(product.sku))
-                                    }
-                                    fs.writeFileSync(filename, convertProductsToExcelBuffer(result))
-                                }).catch(err => {
-                                    throw err
-                                })
-                            }).catch(err => {
-                                throw err
-                            })
+                            fs.writeFileSync(filename, convertProductsToExcelBuffer(products))
                         }).catch(err => {
                             throw err
                         })

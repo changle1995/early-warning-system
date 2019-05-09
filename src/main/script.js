@@ -13,6 +13,8 @@ let createConfigIfNotExist = () => {
     if (!fs.existsSync(configPath)) {
         let config = {
             'scriptRate': 30,
+            'saleStock': 50,
+            'removedStock': 50,
             'login': {
                 'account': '3308715151@qq.com',
                 'password': 'zhiying123'
@@ -42,7 +44,7 @@ async function runScript() {
                 tort: value[6],
                 information: value[7],
                 state: value[8],
-                updateTime: moment(value[9], "YYYY/M/D HH:mm:ss").format("YYYY-MM-DD HH:mm:ss"),
+                updateTime: moment(value[11], "YYYY/M/D HH:mm:ss").format("YYYY-MM-DD HH:mm:ss"),
                 batchNo: currentBatchNo
             }
         }).filter(value => {
@@ -105,7 +107,7 @@ async function download() {
         .set('User-Agent', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36')
         .then(res => {
             let $ = cheerio.load(res.text)
-            token = ($('input[type="hidden"]').val());
+            token = $('input[name="__RequestVerificationToken"]').val()
         })
         .catch(err => {
             return Promise.reject(err)

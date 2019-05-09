@@ -10,12 +10,12 @@
                         </el-menu-item>
                     </el-submenu>
                     <el-submenu index="2">
-                        <template slot="title"><i class="el-icon-tickets"></i>黑白名单</template>
+                        <template slot="title"><i class="el-icon-tickets"></i>上下架管理</template>
                         <el-menu-item index="2-1">
-                            <router-link to='/blackList'>黑名单列表</router-link>
+                            <router-link to='/sale'>在售商品</router-link>
                         </el-menu-item>
                         <el-menu-item index="2-2">
-                            <router-link to='/whiteList'>白名单列表</router-link>
+                            <router-link to='/removed'>已下架商品</router-link>
                         </el-menu-item>
                     </el-submenu>
                     <el-submenu index="3">
