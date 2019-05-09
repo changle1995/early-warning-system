@@ -1,6 +1,6 @@
 import fs from 'fs'
 import path from 'path'
-import {app} from 'electron'
+import {app, BrowserWindow} from 'electron'
 import request from 'superagent'
 import cheerio from 'cheerio'
 import xlsx from 'node-xlsx'
@@ -55,12 +55,16 @@ async function runScript() {
                 startTime: startTime,
                 endTime: moment().format("YYYY-MM-DD HH:mm:ss"),
                 state: '成功'
+            }).then(() => {
+                BrowserWindow.getFocusedWindow().webContents.send('runScriptComplete')
             })
         }).catch(err => {
             Sequelize.Script.create({
                 startTime: startTime,
                 endTime: moment().format("YYYY-MM-DD HH:mm:ss"),
                 state: '失败'
+            }).then(() => {
+                BrowserWindow.getFocusedWindow().webContents.send('runScriptComplete')
             })
             return Promise.reject(err)
         })
@@ -69,6 +73,8 @@ async function runScript() {
             startTime: startTime,
             endTime: moment().format("YYYY-MM-DD HH:mm:ss"),
             state: '失败'
+        }).then(() => {
+            BrowserWindow.getFocusedWindow().webContents.send('runScriptComplete')
         })
         return Promise.reject(err)
     })

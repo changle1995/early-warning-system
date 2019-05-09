@@ -155,6 +155,9 @@
                 if (err) throw err
                 this.scriptRate = JSON.parse(data)['scriptRate']
             })
+            this.$electron.ipcRenderer.on('runScriptComplete', () => {
+                this.search()
+            })
         }
     }
 </script>

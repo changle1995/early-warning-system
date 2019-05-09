@@ -191,21 +191,23 @@
                         }
                     })
                     Sequelize.Product.findOne({order: [['batch_no', 'desc']]}).then(maxBatchNo => {
-                        Sequelize.Product.findAll({where: {batchNo: maxBatchNo.batchNo}})
-                            .then(products => {
-                                products.forEach(product => {
-                                    this.sales.forEach(sale => {
-                                        if (product.sku === sale.sku) {
-                                            sale.name = product.name
-                                            sale.stock = product.stock
-                                        }
+                        if (maxBatchNo) {
+                            Sequelize.Product.findAll({where: {batchNo: maxBatchNo.batchNo}})
+                                .then(products => {
+                                    products.forEach(product => {
+                                        this.sales.forEach(sale => {
+                                            if (product.sku === sale.sku) {
+                                                sale.name = product.name
+                                                sale.stock = product.stock
+                                            }
+                                        })
                                     })
                                 })
-                            })
-                            .finally(() => {
-                                this.list = this.sales
-                                this.refreshListShow()
-                            })
+                                .finally(() => {
+                                    this.list = this.sales
+                                    this.refreshListShow()
+                                })
+                        }
                     }).catch(err => {
                         throw err
                     })

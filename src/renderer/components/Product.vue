@@ -196,8 +196,10 @@
         },
         mounted() {
             Sequelize.Product.findOne({order: [['batch_no', 'desc']]}).then(maxBatchNo => {
-                this.product = {batchNo: maxBatchNo.batchNo}
-                this.search()
+                if (maxBatchNo) {
+                    this.product = {batchNo: maxBatchNo.batchNo}
+                    this.search()
+                }
             }).catch(err => {
                 throw err
             })

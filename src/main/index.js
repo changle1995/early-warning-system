@@ -39,7 +39,6 @@ function createWindow() {
     })
     ipcMain.on('runScript', () => {
         runScript().finally(() => {
-            mainWindow.webContents.send('runScriptComplete')
         })
     })
 }
