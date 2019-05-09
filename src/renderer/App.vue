@@ -2,26 +2,26 @@
     <div id="app">
         <el-container :style="{height:winHeight + 'px'}">
             <el-aside>
-                <el-menu :default-openeds="['1', '2', '3']">
+                <el-menu :default-openeds="['1', '2', '3']" router>
                     <el-submenu index="1">
                         <template slot="title"><i class="el-icon-goods"></i>产品信息</template>
-                        <el-menu-item index="1-1">
-                            <router-link to='/'>产品详情</router-link>
+                        <el-menu-item index="/">
+                            <span slot="title">产品详情</span>
                         </el-menu-item>
                     </el-submenu>
                     <el-submenu index="2">
                         <template slot="title"><i class="el-icon-tickets"></i>上下架管理</template>
-                        <el-menu-item index="2-1">
-                            <router-link to='/sale'>在售商品</router-link>
+                        <el-menu-item index="/sale">
+                            <span slot="title">在售商品</span>
                         </el-menu-item>
-                        <el-menu-item index="2-2">
-                            <router-link to='/removed'>已下架商品</router-link>
+                        <el-menu-item index="/removed">
+                            <span slot="title">已下架商品</span>
                         </el-menu-item>
                     </el-submenu>
                     <el-submenu index="3">
                         <template slot="title"><i class="el-icon-setting"></i>脚本</template>
-                        <el-menu-item index="3-1">
-                            <router-link to='/script'>脚本执行情况</router-link>
+                        <el-menu-item index="/script">
+                            <span slot="title">脚本执行情况</span>
                         </el-menu-item>
                     </el-submenu>
                 </el-menu>
@@ -64,12 +64,6 @@
     .el-aside {
         width: 200px !important;
         background: #eee;
-
-        a {
-            color: #333;
-            display: block;
-            text-decoration: none;
-        }
 
         .el-menu {
             background: #eee;
