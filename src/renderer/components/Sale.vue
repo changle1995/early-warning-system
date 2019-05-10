@@ -105,7 +105,7 @@
                             Sequelize.MyProduct.bulkCreate(workSheetsFromFile.filter((value, index) => {
                                 return index !== 0
                             }).map(value => {
-                                return {sku: value[0].trim(), state: 1}
+                                return {sku: value[0], state: 1}
                             })).finally(() => {
                                 this.getData()
                             })
@@ -184,7 +184,7 @@
                     this.sales = sales.map(sale => {
                         return {
                             id: sale.id,
-                            sku: sale.sku,
+                            sku: sale.sku.trim(),
                             name: '',
                             stock: null,
                             state: sale.state
